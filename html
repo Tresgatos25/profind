@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFIND | Encuentra al profesional que necesitas</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-black tracking-wider text-blue-600">PROFIND</span>
+            </div>
+            <!-- Menú de navegación -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-blue-600 transition">Buscar</a>
+                <a href="#categorias" class="hover:text-blue-600 transition">Profesionales</a>
+                <a href="#" class="hover:text-blue-600 transition">Cómo funciona</a>
+            </nav>
+            <!-- Botón de acción -->
+            <div>
+                <button onclick="abrirModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition shadow-sm">
+                    Crear perfil
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECCIÓN PRINCIPAL (HERO SECTION) -->
+    <main class="flex-grow">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Columna Izquierda: Títulos y Buscador -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Directorio Profesional
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
+                        Encuentra al profesional que necesitas.
+                    </h1>
+                    <p class="text-lg text-gray-600">
+                        Conecta profesionales, empresas y marcas en un solo lugar. Busca por profesión, especialidad, ciudad o servicio.
+                    </p>
+
+                    <!-- Caja de Búsqueda -->
+                    <div class="bg-white p-3 rounded-2xl shadow-xl border border-gray-100 flex flex-col sm:flex-row gap-3">
+                        <div class="flex-1 flex items-center px-3 border-b sm:border-b-0 sm:border-r border-gray-200 py-2 sm:py-0">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" id="inputBusqueda" placeholder="Profesión, especialidad o servicio..." class="w-full focus:outline-none text-sm text-gray-700 placeholder-gray-400">
+                        </div>
+                        <div class="sm:w-48 flex items-center px-3 py-2 sm:py-0">
+                            <select id="selectCiudad" class="w-full focus:outline-none text-sm text-gray-700 bg-transparent cursor-pointer">
+                                <option value="">Todas las ciudades</option>
+                                <option value="San Salvador">San Salvador</option>
+                                <option value="Santa Ana">Santa Ana</option>
+                                <option value="San Miguel">San Miguel</option>
+                                <option value="Santa Tecla">Santa Tecla</option>
+                            </select>
+                        </div>
+                        <button onclick="realizarBusqueda()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-medium text-sm transition shadow-md flex items-center justify-center">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Profesionales Destacados (Card Estilo Referencia) -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                        <h2 class="text-lg font-bold text-gray-900 mb-4">Profesionales destacados</h2>
+                        
+                        <div class="divide-y divide-gray-100" id="listaDestacados">
+                            <div class="py-3.5 flex items-center space-x-4">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">JP</div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Juan Pérez</h3>
+                                    <p class="text-xs text-gray-500">Farmacéutico · San Salvador</p>
+                                </div>
+                            </div>
+                            <div class="py-3.5 flex items-center space-x-4">
+                                <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 font-bold flex items-center justify-center text-sm">ML</div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">María López</h3>
+                                    <p class="text-xs text-gray-500">Médica · Santa Ana</p>
+                                </div>
+                            </div>
+                            <div class="py-3.5 flex items-center space-x-4">
+                                <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 font-bold flex items-center justify-center text-sm">CH</div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Carlos Hernández</h3>
+                                    <p class="text-xs text-gray-500">Diseñador · San Miguel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE RESULTADOS DE BÚSQUEDA / CATEGORÍAS -->
+        <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Explora por categoría</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">💊</span>
+                    <h3 class="font-semibold text-sm text-gray-800">Salud y Farmacia</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">⚖️</span>
+                    <h3 class="font-semibold text-sm text-gray-800">Legal</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">💻</span>
+                    <h3 class="font-semibold text-sm text-gray-800">Tecnología</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">🎨</span>
+                    <h3 class="font-semibold text-sm text-gray-800">Diseño y Arte</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">📊</span>
+                    <h3 class="font-semibold text-sm text-gray-800">Consultoría</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">🏗️</span>
+                    <h3 class="font-semibold text-sm text-gray-800">Ingeniería</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 PROFIND. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- MODAL SIMPLE PARA CREAR PERFIL -->
+    <div id="modalPerfil" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 font-bold">✕</button>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Unirme a PROFIND</h3>
+            <p class="text-xs text-gray-500 mb-4">Regístrate para aparecer en el directorio profesional.</p>
+            <div class="space-y-4">
+                <input type="text" placeholder="Nombre completo" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                <input type="text" placeholder="Profesión o especialidad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                <input type="text" placeholder="Ciudad (ej. San Salvador)" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                <button onclick="alertaRegistro()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-medium transition">Guardar Perfil</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE FUNCIONALIDAD -->
+    <script>
+        function abrirModal() {
+            document.getElementById('modalPerfil').classList.remove('hidden');
+            document.getElementById('modalPerfil').classList.add('flex');
+        }
+        function cerrarModal() {
+            document.getElementById('modalPerfil').classList.remove('flex');
+            document.getElementById('modalPerfil').classList.add('hidden');
+        }
+        function realizarBusqueda() {
+            const query = document.getElementById('inputBusqueda').value;
+            const ciudad = document.getElementById('selectCiudad').value;
+            alert(`Buscando: "${query || 'Todos'}" en "${ciudad || 'Todas las ciudades'}"`);
+        }
+        function alertaRegistro() {
+            alert('¡Perfil enviado con éxito! Pronto estará visible en la plataforma.');
+            cerrarModal();
+        }
+    </script>
+</body>
+</html>
