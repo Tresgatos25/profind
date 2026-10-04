@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFIND | Encuentra al profesional que necesitas</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <header class="w-full bg-white border-b border-slate-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <a href="#" class="text-2xl font-black tracking-wider text-blue-600 flex items-center gap-1.5">
+                    <span>PROFIND</span>
+                </a>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#buscar" class="hover:text-blue-600 transition">Buscar</a>
+                <a href="#categorias" class="hover:text-blue-600 transition">Profesionales</a>
+                <a href="#como-funciona" class="hover:text-blue-600 transition">Cómo funciona</a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="flex items-center space-x-4">
+                <button onclick="openModal('registerModal')" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-sm transition transform active:scale-95 text-sm">
+                    Crear perfil
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Hero Text & Search Box -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Directorio Profesional
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
+                        Encuentra al profesional que necesitas.
+                    </h1>
+                    <p class="text-lg text-slate-600 max-w-xl leading-relaxed">
+                        Conecta profesionales, empresas y marcas en un solo lugar. Busca por profesión, especialidad, ciudad o servicio.
+                    </p>
+
+                    <!-- Interactive Search Form Box -->
+                    <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-xl border border-slate-100 flex flex-col sm:flex-row gap-3 mt-4">
+                        <div class="flex-1 flex items-center bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 focus-within:border-blue-500 transition">
+                            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
+                            <input type="text" id="searchInput" placeholder="Profesión, especialidad o servicio" class="w-full bg-transparent text-sm focus:outline-none text-slate-700">
+                        </div>
+
+                        <div class="sm:w-52 flex items-center bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 focus-within:border-blue-500 transition">
+                            <i class="fa-solid fa-location-dot text-slate-400 mr-3"></i>
+                            <select id="citySelect" class="w-full bg-transparent text-sm focus:outline-none text-slate-700 cursor-pointer">
+                                <option value="">Todas las ciudades</option>
+                                <option value="San Salvador">San Salvador</option>
+                                <option value="Santa Ana">Santa Ana</option>
+                                <option value="San Miguel">San Miguel</option>
+                                <option value="Santa Tecla">Santa Tecla</option>
+                            </select>
+                        </div>
+
+                        <button onclick="performSearch()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3.5 rounded-xl shadow transition flex items-center justify-center gap-2">
+                            <span>Buscar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Featured Professionals Card (Matching User Image Reference) -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 relative">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-slate-900 text-lg">Profesionales destacados</h3>
+                            <span class="text-xs bg-amber-50 text-amber-700 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
+                                <i class="fa-solid fa-star text-amber-500"></i> Pro
+                            </span>
+                        </div>
+
+                        <div class="divide-y divide-slate-100 space-y-4">
+                            <!-- Professional 1 -->
+                            <div class="pt-4 first:pt-0 flex items-center justify-between group cursor-pointer hover:bg-slate-50 p-2 rounded-xl transition" onclick="showProfile('Juan Pérez', 'Farmacéutico', 'San Salvador')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm shadow-inner">
+                                        JP
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-slate-900 group-hover:text-blue-600 transition">Juan Pérez</h4>
+                                        <p class="text-xs text-slate-500">Farmacéutico · San Salvador</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs group-hover:text-blue-600 transition"></i>
+                            </div>
+
+                            <!-- Professional 2 -->
+                            <div class="pt-4 flex items-center justify-between group cursor-pointer hover:bg-slate-50 p-2 rounded-xl transition" onclick="showProfile('María López', 'Médica', 'Santa Ana')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm shadow-inner">
+                                        ML
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-slate-900 group-hover:text-blue-600 transition">María López</h4>
+                                        <p class="text-xs text-slate-500">Médica · Santa Ana</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs group-hover:text-blue-600 transition"></i>
+                            </div>
+
+                            <!-- Professional 3 -->
+                            <div class="pt-4 flex items-center justify-between group cursor-pointer hover:bg-slate-50 p-2 rounded-xl transition" onclick="showProfile('Carlos Hernández', 'Diseñador', 'San Miguel')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-sm shadow-inner">
+                                        CH
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-slate-900 group-hover:text-blue-600 transition">Carlos Hernández</h4>
+                                        <p class="text-xs text-slate-500">Diseñador · San Miguel</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 text-xs group-hover:text-blue-600 transition"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="categorias" class="py-16 bg-white border-t border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Explora por categoría</h2>
+                    <p class="text-slate-600 mt-2">Encuentra expertos calificados en diferentes áreas profesionales y gremios.</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div onclick="filterByCategory('Salud')" class="p-6 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-2xl text-center cursor-pointer transition group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-notes-medical"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Salud y Farmacia</h3>
+                    </div>
+
+                    <div onclick="filterByCategory('Diseño')" class="p-6 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-2xl text-center cursor-pointer transition group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Diseño y Arte</h3>
+                    </div>
+
+                    <div onclick="filterByCategory('Legal')" class="p-6 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-2xl text-center cursor-pointer transition group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Legal y Jurídico</h3>
+                    </div>
+
+                    <div onclick="filterByCategory('Tecnología')" class="p-6 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-2xl text-center cursor-pointer transition group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Tecnología</h3>
+                    </div>
+
+                    <div onclick="filterByCategory('Consultoría')" class="p-6 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-2xl text-center cursor-pointer transition group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Consultoría</h3>
+                    </div>
+
+                    <div onclick="filterByCategory('Construcción')" class="p-6 bg-slate-50 hover:bg-blue-50 border border-slate-100 rounded-2xl text-center cursor-pointer transition group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition">
+                            <i class="fa-solid fa-hard-hat"></i>
+                        </div>
+                        <h3 class="font-semibold text-slate-800 text-sm">Ingeniería</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="buscar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="text-xl font-bold text-slate-900">Resultados del Directorio</h3>
+                <span id="resultsCount" class="text-sm text-slate-500">Mostrando profesionales activos</span>
+            </div>
+
+            <div id="directoryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards injected dynamically via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Profile Detail Modal -->
+    <div id="profileModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal('profileModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mt-2">
+                <div id="modalInitials" class="w-20 h-20 rounded-full bg-blue-100 text-blue-700 font-bold text-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    JP
+                </div>
+                <h3 id="modalName" class="text-xl font-bold text-slate-900">Juan Pérez</h3>
+                <p id="modalProfession" class="text-blue-600 font-medium text-sm mt-0.5">Farmacéutico</p>
+                <p id="modalCity" class="text-slate-500 text-xs mt-1 flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-location-dot"></i> San Salvador
+                </p>
+
+                <div class="mt-6 border-t border-slate-100 pt-6 text-left space-y-3">
+                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                        <i class="fa-solid fa-envelope text-blue-600 w-5"></i>
+                        <span>contacto@profind.com</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                        <i class="fa-solid fa-phone text-blue-600 w-5"></i>
+                        <span>+503 7000-0000</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                        <i class="fa-solid fa-circle-check text-emerald-600 w-5"></i>
+                        <span>Verificado por PROFIND</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex gap-3">
+                    <button onclick="closeModal('profileModal'); showToast('¡Mensaje enviado con éxito al profesional!');" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition text-sm shadow">
+                        Contactar
+                    </button>
+                    <button onclick="closeModal('profileModal')" class="px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 rounded-xl transition text-sm">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 mb-1">Crea tu perfil profesional</h3>
+            <p class="text-slate-500 text-xs mb-6">Únete a la red de expertos más grande del país.</p>
+            
+            <form onsubmit="handleRegister(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nombre completo</label>
+                    <input type="text" required placeholder="Ej. Ana Martínez" class="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Profesión / Especialidad</label>
+                    <input type="text" required placeholder="Ej. Abogado Corporativo" class="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Ciudad</label>
+                    <select class="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                        <option>San Salvador</option>
+                        <option>Santa Ana</option>
+                        <option>San Miguel</option>
+                        <option>Santa Tecla</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition text-sm shadow mt-2">
+                    Registrarme gratis
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 text-sm font-medium flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMessage">Operación realizada</span>
+    </div>
+
+    <footer class="bg-white border-t border-slate-100 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-sm text-slate-500">
+            <p>&copy; 2026 PROFIND. Todos los derechos reservados.</p>
+            <div class="flex space-x-6 mt-4 sm:mt-0">
+                <a href="#" class="hover:text-blue-600 transition">Términos</a>
+                <a href="#" class="hover:text-blue-600 transition">Privacidad</a>
+                <a href="#" class="hover:text-blue-600 transition">Soporte</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mock Professionals Database
+        const professionals = [
+            { id: 1, name: "Juan Pérez", profession: "Farmacéutico", category: "Salud", city: "San Salvador", initials: "JP", color: "bg-blue-100 text-blue-700" },
+            { id: 2, name: "María López", profession: "Médica Pediatra", category: "Salud", city: "Santa Ana", initials: "ML", color: "bg-emerald-100 text-emerald-700" },
+            { id: 3, name: "Carlos Hernández", profession: "Diseñador UX/UI", category: "Diseño", city: "San Miguel", initials: "CH", color: "bg-purple-100 text-purple-700" },
+            { id: 4, name: "Sofía Rivas", profession: "Abogada Notario", category: "Legal", city: "San Salvador", initials: "SR", color: "bg-amber-100 text-amber-700" },
+            { id: 5, name: "Diego Ramírez", profession: "Desarrollador FullStack", category: "Tecnología", city: "Santa Tecla", initials: "DR", color: "bg-indigo-100 text-indigo-700" },
+            { id: 6, name: "Lucía Munguía", profession: "Consultora Financiera", category: "Consultoría", city: "San Salvador", initials: "LM", color: "bg-rose-100 text-rose-700" }
+        ];
+
+        // Render directory on load
+        window.onload = function() {
+            renderProfessionals(professionals);
+        }
+
+        function renderProfessionals(data) {
+            const grid = document.getElementById('directoryGrid');
+            document.getElementById('resultsCount').innerText = `Mostrando ${data.length} profesionales`;
+            
+            if(data.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400">
+                        <i class="fa-solid fa-folder-open text-4xl mb-3"></i>
+                        <p class="text-base font-medium">No se encontraron profesionales con ese criterio.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = data.map(p => `
+                <div onclick="showProfile('${p.name}', '${p.profession}', '${p.city}')" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-14 h-14 rounded-2xl ${p.color} font-bold flex items-center justify-center text-lg shadow-inner">
+                                ${p.initials}
+                            </div>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">${p.category}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg group-hover:text-blue-600 transition">${p.name}</h4>
+                        <p class="text-sm font-medium text-blue-600 mt-0.5">${p.profession}</p>
+                        <p class="text-xs text-slate-500 mt-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-location-dot text-slate-400"></i> ${p.city}
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between text-xs font-semibold text-slate-600 group-hover:text-blue-600">
+                        <span>Ver perfil completo</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const city = document.getElementById('citySelect').value;
+
+            const filtered = professionals.filter(p => {
+                const matchesQuery = p.name.toLowerCase().includes(query) || p.profession.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+                const matchesCity = city === "" || p.city === city;
+                return matchesQuery && matchesCity;
+            });
+
+            renderProfessionals(filtered);
+            showToast('Búsqueda actualizada');
+        }
+
+        function filterByCategory(categoryName) {
+            const filtered = professionals.filter(p => p.category === categoryName);
+            renderProfessionals(filtered);
+            document.getElementById('buscar').scrollIntoView({ behavior: 'smooth' });
+            showToast(`Filtrado por: ${categoryName}`);
+        }
+
+        function showProfile(name, profession, city) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalProfession').innerText = profession;
+            document.getElementById('modalCity').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${city}`;
+            
+            // Generate initials
+            const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+            document.getElementById('modalInitials').innerText = initials;
+
+            document.getElementById('profileModal').classList.remove('hidden');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            closeModal('registerModal');
+            showToast('¡Perfil creado con éxito! Ya estás visible en PROFIND.');
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
