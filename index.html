@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    <!-- Script de Funcionalidad Conectada -->
+    <!-- Script Corregido y Robusto -->
     <script>
         let profesionales = [
             { nombre: "ricardo saravia", profesion: "farmacéutico", ciudad: "san salvador", iniciales: "RS" },
@@ -143,7 +143,7 @@
             contenedor.innerHTML = "";
 
             if (lista.length === 0) {
-                contenedor.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No se encontraron profesionales.</p>`;
+                contenedor.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No se encontraron profesionales en esta categoría.</p>`;
                 return;
             }
 
@@ -172,7 +172,11 @@
                 return coincideTexto && coincideCiudad;
             });
 
-            document.getElementById('tituloResultadosinnerText'] = (termino === "" && ciudadFiltro === "todas") ? "Profesionales destacados" : "Resultados de búsqueda";
+            const titulo = document.getElementById('tituloResultados');
+            if(titulo) {
+                titulo.innerText = (termino === "" && ciudadFiltro === "todas") ? "Profesionales destacados" : "Resultados de búsqueda";
+            }
+            
             mostrarProfesionales(resultados);
         }
 
@@ -210,22 +214,21 @@
             alert("¡Perfil creado y publicado con éxito!");
         }
 
-        // Conexión automática de eventos al cargar la página
         window.onload = function() {
             mostrarProfesionales(profesionales);
 
-            // Escuchar clic en el botón de búsqueda
-            document.getElementById('btnBuscar').addEventListener('click', realizarBusqueda);
+            const btnBuscar = document.getElementById('btnBuscar');
+            if(btnBuscar) btnBuscar.addEventListener('click', realizarBusqueda);
 
-            // Permitir buscar presionando Enter en el input de texto
-            document.getElementById('inputBusqueda').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    realizarBusqueda();
-                }
-            });
+            const inputBusqueda = document.getElementById('inputBusqueda');
+            if(inputBusqueda) {
+                inputBusqueda.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') realizarBusqueda();
+                });
+            }
 
-            // Filtrar automáticamente al cambiar la ciudad en el select
-            document.getElementById('selectCiudad').addEventListener('change', realizarBusqueda);
+            const selectCiudad = document.getElementById('selectCiudad');
+            if(selectCiudad) selectCiudad.addEventListener('change', realizarBusqueda);
         };
     </script>
 </body>
