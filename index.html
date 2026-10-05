@@ -56,31 +56,13 @@
             </div>
         </div>
 
-        <!-- Tarjeta de Profesionales Destacados -->
+        <!-- Tarjeta de Profesionales Destacados / Resultados -->
         <div class="lg:col-span-5">
             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 space-y-6">
-                <h2 class="text-lg font-bold text-gray-900 border-b pb-4">Profesionales destacados</h2>
+                <h2 id="tituloResultados" class="text-lg font-bold text-gray-900 border-b pb-4">Profesionales destacados</h2>
                 
                 <div class="space-y-4" id="listaDestacados">
-                    <div class="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-xl transition">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center shrink-0">
-                            RS
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-900 truncate">ricardo saravia</p>
-                            <p class="text-xs text-gray-500 truncate">farmacéutico · san salvador</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-xl transition">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center shrink-0">
-                            DD
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-900 truncate">daniel dominguez</p>
-                            <p class="text-xs text-gray-500 truncate">farmacéutico · san salvador</p>
-                        </div>
-                    </div>
+                    <!-- Los perfiles se cargan dinámicamente aquí -->
                 </div>
             </div>
         </div>
@@ -90,48 +72,48 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-200">
         <h2 class="text-2xl font-bold text-gray-900 text-center mb-8">Explora por categoría</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div onclick="filtrarCategoria('salud')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
+            <div onclick="filtrarCategoria('farmacéutico')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
                 <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-pills"></i></div>
                 <p class="text-sm font-medium text-gray-700">Salud y Farmacia</p>
             </div>
-            <div onclick="filtrarCategoria('legal')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
+            <div onclick="filtrarCategoria('abogado')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
                 <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-scale-balanced"></i></div>
                 <p class="text-sm font-medium text-gray-700">Legal</p>
             </div>
-            <div onclick="filtrarCategoria('tecnologia')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
+            <div onclick="filtrarCategoria('desarrollador')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
                 <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-laptop-code"></i></div>
                 <p class="text-sm font-medium text-gray-700">Tecnología</p>
             </div>
-            <div onclick="filtrarCategoria('creativo')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
+            <div onclick="filtrarCategoria('diseñador')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
                 <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-palette"></i></div>
                 <p class="text-sm font-medium text-gray-700">Creativos</p>
             </div>
-            <div onclick="filtrarCategoria('finanzas')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
+            <div onclick="filtrarCategoria('contador')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
                 <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-chart-line"></i></div>
                 <p class="text-sm font-medium text-gray-700">Finanzas</p>
             </div>
-            <div onclick="filtrarCategoria('ingenieria')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:scale-105 transition cursor-pointer group">
+            <div onclick="filtrarCategoria('ingeniero')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:scale-105 transition cursor-pointer group">
                 <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-hard-hat"></i></div>
                 <p class="text-sm font-medium text-gray-700">Ingeniería</p>
             </div>
         </div>
     </section>
 
-    <!-- Modal para Crear Perfil (Oculto por defecto) -->
+    <!-- Modal para Crear Perfil -->
     <div id="modalPerfil" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 relative">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="text-xl font-bold text-gray-900">Registrar Nuevo Perfil</h3>
-                <button onclick="cerrarModalPerfil()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+                <button onclick="cerrarModalPerfil()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
             </div>
             <form id="formPerfil" onsubmit="guardarPerfil(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nombre Completo</label>
-                    <input type="text" id="nombrePerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                    <input type="text" id="nombrePerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm" placeholder="Ej. Ricardo Saravia">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Profesión o Especialidad</label>
-                    <input type="text" id="profesionPerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm" placeholder="Ej. Farmacéutico, Abogado...">
+                    <input type="text" id="profesionPerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm" placeholder="Ej. Farmacéutico">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Ciudad</label>
@@ -143,18 +125,56 @@
                     </select>
                 </div>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition">
-                    Guardar Perfil
+                    Publicar Perfil
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Script de Control -->
+    <!-- Script de Funcionalidad Completa -->
     <script>
+        // Base de datos inicial de profesionales
+        let profesionales = [
+            { nombre: "ricardo saravia", profesion: "farmacéutico", ciudad: "san salvador", iniciales: "RS" },
+            { nombre: "daniel dominguez", profesion: "farmacéutico", ciudad: "san salvador", iniciales: "DD" }
+        ];
+
+        function mostrarProfesionales(lista) {
+            const contenedor = document.getElementById('listaDestacados');
+            contenedor.innerHTML = "";
+
+            if (lista.length === 0) {
+                contenedor.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No se encontraron profesionales.</p>`;
+                return;
+            }
+
+            lista.forEach(p => {
+                contenedor.innerHTML += `
+                    <div class="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-xl transition border-b border-gray-50 last:border-none">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center shrink-0">
+                            ${p.iniciales}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold text-gray-900 truncate">${p.nombre}</p>
+                            <p class="text-xs text-gray-500 truncate">${p.profesion} · ${p.ciudad}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
         function realizarBusqueda() {
-            const termino = document.getElementById('inputBusqueda').value.trim();
-            const ciudad = document.getElementById('selectCiudad').value;
-            console.log("Buscando término:", termino, "en ciudad:", ciudad);
+            const termino = document.getElementById('inputBusqueda').value.toLowerCase().trim();
+            const ciudadFiltro = document.getElementById('selectCiudad').value;
+
+            const resultados = profesionales.filter(p => {
+                const coincideTexto = termino === "" || p.nombre.includes(termino) || p.profesion.includes(termino);
+                const coincideCiudad = ciudadFiltro === "todas" || p.ciudad === ciudadFiltro;
+                return coincideTexto && coincideCiudad;
+            });
+
+            document.getElementById('tituloResultados').innerText = termino === "" && ciudadFiltro === "todas" ? "Profesionales destacados" : "Resultados de búsqueda";
+            mostrarProfesionales(resultados);
         }
 
         function filtrarCategoria(categoria) {
@@ -172,14 +192,32 @@
 
         function guardarPerfil(event) {
             event.preventDefault();
-            const nombre = document.getElementById('nombrePerfil').value;
-            const profesion = document.getElementById('profesionPerfil').value;
+            const nombre = document.getElementById('nombrePerfil').value.toLowerCase().trim();
+            const profesion = document.getElementById('profesionPerfil').value.toLowerCase().trim();
             const ciudad = document.getElementById('ciudadPerfil').value;
 
-            alert(`¡Perfil de ${nombre} registrado con éxito!`);
+            // Obtener iniciales automáticamente
+            const partes = nombre.split(" ");
+            let iniciales = partes[0][0].toUpperCase();
+            if (partes.length > 1) iniciales += partes[1][0].toUpperCase();
+
+            // Agregar a la lista
+            profesionales.unshift({ nombre, profesion, ciudad, iniciales });
+
+            // Actualizar vista
+            document.getElementById('inputBusqueda').value = "";
+            document.getElementById('selectCiudad').value = "todas";
+            mostrarProfesionales(profesionales);
+
             cerrarModalPerfil();
             document.getElementById('formPerfil').reset();
+            alert("¡Perfil creado y publicado con éxito!");
         }
+
+        // Cargar la lista inicial al abrir la página
+        window.onload = function() {
+            mostrarProfesionales(profesionales);
+        };
     </script>
 </body>
 </html>
