@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROFIND | Encuentra al profesional que necesitas</title>
-    <!-- Tailwind CSS para un diseño limpio y moderno -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -62,7 +62,6 @@
                 <h2 class="text-lg font-bold text-gray-900 border-b pb-4">Profesionales destacados</h2>
                 
                 <div class="space-y-4" id="listaDestacados">
-                    <!-- Item 1 -->
                     <div class="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-xl transition">
                         <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center shrink-0">
                             RS
@@ -73,7 +72,6 @@
                         </div>
                     </div>
 
-                    <!-- Item 2 -->
                     <div class="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-xl transition">
                         <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center shrink-0">
                             DD
@@ -119,13 +117,43 @@
         </div>
     </section>
 
-    <!-- Script de Lógica totalmente limpio sin alertas -->
+    <!-- Modal para Crear Perfil (Oculto por defecto) -->
+    <div id="modalPerfil" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 relative">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-xl font-bold text-gray-900">Registrar Nuevo Perfil</h3>
+                <button onclick="cerrarModalPerfil()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            </div>
+            <form id="formPerfil" onsubmit="guardarPerfil(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nombre Completo</label>
+                    <input type="text" id="nombrePerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Profesión o Especialidad</label>
+                    <input type="text" id="profesionPerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm" placeholder="Ej. Farmacéutico, Abogado...">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Ciudad</label>
+                    <select id="ciudadPerfil" class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm bg-white">
+                        <option value="san salvador">San Salvador</option>
+                        <option value="santa ana">Santa Ana</option>
+                        <option value="san miguel">San Miguel</option>
+                        <option value="la libertad">La Libertad</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition">
+                    Guardar Perfil
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script de Control -->
     <script>
         function realizarBusqueda() {
             const termino = document.getElementById('inputBusqueda').value.trim();
             const ciudad = document.getElementById('selectCiudad').value;
-
-            // Lógica de búsqueda interna limpia
             console.log("Buscando término:", termino, "en ciudad:", ciudad);
         }
 
@@ -135,8 +163,22 @@
         }
 
         function abrirModalPerfil() {
-            // Función limpia sin alertas emergentes
-            console.log("Abrir registro de perfil");
+            document.getElementById('modalPerfil').classList.remove('hidden');
+        }
+
+        function cerrarModalPerfil() {
+            document.getElementById('modalPerfil').classList.add('hidden');
+        }
+
+        function guardarPerfil(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombrePerfil').value;
+            const profesion = document.getElementById('profesionPerfil').value;
+            const ciudad = document.getElementById('ciudadPerfil').value;
+
+            alert(`¡Perfil de ${nombre} registrado con éxito!`);
+            cerrarModalPerfil();
+            document.getElementById('formPerfil').reset();
         }
     </script>
 </body>
