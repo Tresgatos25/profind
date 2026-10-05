@@ -119,19 +119,14 @@
         </div>
     </section>
 
-    <!-- Script de Lógica sin Alertas Molestas -->
+    <!-- Script de Lógica totalmente limpio sin alertas -->
     <script>
         function realizarBusqueda() {
             const termino = document.getElementById('inputBusqueda').value.trim();
             const ciudad = document.getElementById('selectCiudad').value;
 
-            // Aquí puedes implementar la lógica real de filtrado o redirección sin usar alert()
+            // Lógica de búsqueda interna limpia
             console.log("Buscando término:", termino, "en ciudad:", ciudad);
-            
-            // Ejemplo de respuesta visual opcional en consola o interfaz en lugar de alerta:
-            if(termino !== "") {
-                // Realizar acción de búsqueda limpia
-            }
         }
 
         function filtrarCategoria(categoria) {
@@ -140,7 +135,8 @@
         }
 
         function abrirModalPerfil() {
-            alert("Pronto habilitaremos el formulario de registro de perfiles.");
+            // Función limpia sin alertas emergentes
+            console.log("Abrir registro de perfil");
         }
     </script>
 </body>
