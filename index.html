@@ -71,7 +71,6 @@
                     </div>
                 </div>
 
-                <!-- Columna Derecha (Dinámica desde Firebase) -->
                 <div class="lg:col-span-5">
                     <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
                         <h2 class="text-lg font-bold text-slate-900 mb-4">Profesionales destacados</h2>
@@ -86,7 +85,7 @@
 
         <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200">
             <h2 class="text-2xl font-bold text-slate-900 mb-8 text-center">Explora por categoría</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 text-center">
                 <div onclick="filtrarPorCategoria('Salud')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">💊</span>
                     <h3 class="font-semibold text-sm text-slate-800">Salud y Farmacia</h3>
@@ -110,6 +109,14 @@
                 <div onclick="filtrarPorCategoria('Ingeniería')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">🏗️</span>
                     <h3 class="font-semibold text-sm text-slate-800">Ingeniería</h3>
+                </div>
+                <div onclick="filtrarPorCategoria('Educación')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">📚</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Educación</h3>
+                </div>
+                <div onclick="filtrarPorCategoria('Alimentos y HACCP')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">🛡️</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Alimentos y HACCP</h3>
                 </div>
             </div>
         </section>
@@ -184,7 +191,7 @@
     </footer>
 
     <div id="modalPerfil" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden items-center justify-center z-50 px-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="cerrarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Unirme a PROFIND</h3>
             <p class="text-xs text-slate-500 mb-4">Regístrate para aparecer en el directorio profesional.</p>
@@ -195,7 +202,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Profesión o Especialidad</label>
-                    <input type="text" id="regProfesion" placeholder="Ej. Farmacéutico o Abogado" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    <input type="text" id="regProfesion" placeholder="Ej. Consultor HACCP o Abogado" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Categoría Principal</label>
@@ -206,11 +213,17 @@
                         <option value="Diseño">Diseño y Arte</option>
                         <option value="Consultoría">Consultoría</option>
                         <option value="Ingeniería">Ingeniería</option>
+                        <option value="Educación">Educación</option>
+                        <option value="Alimentos y HACCP">Alimentos y HACCP</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Ciudad</label>
                     <input type="text" id="regCiudad" placeholder="Ej. San Salvador" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">WhatsApp o Teléfono de Contacto</label>
+                    <input type="text" id="regContacto" placeholder="Ej. +503 7000-0000" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
                 <button onclick="guardarPerfilFirebase()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-medium transition">Guardar Perfil en la Nube</button>
             </div>
@@ -266,8 +279,9 @@
             const profesion = document.getElementById('regProfesion').value.trim();
             const categoria = document.getElementById('regCategoria').value;
             const ciudad = document.getElementById('regCiudad').value.trim();
+            const contacto = document.getElementById('regContacto').value.trim();
 
-            if(!nombre || !profesion || !ciudad) {
+            if(!nombre || !profesion || !ciudad || !contacto) {
                 mostrarToast('Por favor completa todos los campos.');
                 return;
             }
@@ -278,6 +292,7 @@
                     profesion: profesion,
                     categoria: categoria || 'General',
                     ciudad: ciudad,
+                    contacto: contacto,
                     creado: new Date()
                 });
                 cerrarModal();
@@ -285,6 +300,7 @@
                 document.getElementById('regNombre').value = '';
                 document.getElementById('regProfesion').value = '';
                 document.getElementById('regCiudad').value = '';
+                document.getElementById('regContacto').value = '';
                 cargarProfesionales();
             } catch (e) {
                 console.error("Error al guardar: ", e);
@@ -310,7 +326,8 @@
                         nombre: data.nombre || data.Nombre || 'Profesional', 
                         profesion: data.profesion || data.Profesion || 'Especialista', 
                         categoria: data.categoria || data.Categoria || 'General', 
-                        ciudad: data.ciudad || data.Ciudad || 'El Salvador' 
+                        ciudad: data.ciudad || data.Ciudad || 'El Salvador',
+                        contacto: data.contacto || data.Contacto || '' 
                     });
                 });
 
@@ -342,15 +359,21 @@
                 const nombreVal = p.nombre || 'Profesional';
                 const profVal = p.profesion || 'Especialista';
                 const ciudadVal = p.ciudad || 'El Salvador';
+                const contactoVal = p.contacto || '';
                 const iniciales = nombreVal.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'PF';
                 
+                let botonContacto = contactoVal ? `<a href="https://wa.me/${contactoVal.replace(/[^0-9]/g, '')}" target="_blank" class="text-xs text-emerald-600 font-semibold hover:underline">WhatsApp ↗</a>` : '';
+
                 contenedorDestacados.innerHTML += `
-                    <div class="py-3.5 flex items-center space-x-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">${iniciales}</div>
-                        <div>
-                            <h3 class="text-sm font-semibold text-slate-900">${nombreVal}</h3>
-                            <p class="text-xs text-slate-500">${profVal} · ${ciudadVal}</p>
+                    <div class="py-3.5 flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">${iniciales}</div>
+                            <div>
+                                <h3 class="text-sm font-semibold text-slate-900">${nombreVal}</h3>
+                                <p class="text-xs text-slate-500">${profVal} · ${ciudadVal}</p>
+                            </div>
                         </div>
+                        <div>${botonContacto}</div>
                     </div>
                 `;
             });
@@ -361,8 +384,14 @@
                 const profVal = p.profesion || 'Especialista';
                 const ciudadVal = p.ciudad || 'El Salvador';
                 const catVal = p.categoria || 'General';
+                const contactoVal = p.contacto || 'Sin contacto';
                 const iniciales = nombreVal.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'PF';
                 
+                let enlaceWhatsApp = contactoVal.replace(/[^0-9]/g, '');
+                let botonAccion = enlaceWhatsApp.length >= 8 ? 
+                    `<a href="https://wa.me/${enlaceWhatsApp}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition"><i class="fa-brands fa-whatsapp"></i> Contactar</a>` : 
+                    `<span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-phone"></i> ${contactoVal}</span>`;
+
                 contenedorDirectorio.innerHTML += `
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition flex flex-col justify-between">
                         <div>
@@ -377,8 +406,8 @@
                             </p>
                         </div>
                         <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                            <span class="text-xs text-slate-400 font-medium">Disponible</span>
-                            <button onclick="mostrarToast('Conectando con ${nombreVal} ...')" class="text-xs text-blue-600 hover:text-blue-700 font-semibold">Contactar →</button>
+                            <span class="text-xs text-slate-400 font-medium">Directo</span>
+                            ${botonAccion}
                         </div>
                     </div>
                 `;
