@@ -117,7 +117,7 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE MARCO LEGAL Y DERECHOS ARCO -->
+        <!-- SECCIÓN DE MARCO LEGAL Y DERECHOS ARCO (Estilo Tarjetas) -->
         <section id="legal" class="bg-slate-900 text-white py-16 mt-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
@@ -223,6 +223,12 @@
         </div>
     </div>
 
+    <!-- MENSAJE FLOTANTE (TOAST) PARA NOTIFICACIONES PROFESIONALES -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 text-xs font-medium flex items-center gap-2.5">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg">Operación exitosa</span>
+    </div>
+
     <!-- CONFIGURACIÓN Y CONEXIÓN CON FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -247,7 +253,7 @@
             const ciudad = document.getElementById('regCiudad').value;
 
             if(!nombre || !profesion || !ciudad) {
-                alert('Por favor completa todos los campos.');
+                mostrarToast('Por favor completa todos los campos.');
                 return;
             }
 
@@ -258,18 +264,18 @@
                     ciudad: ciudad,
                     creado: new Date()
                 });
-                alert('¡Perfil guardado exitosamente en Firebase!');
                 cerrarModal();
+                mostrarToast('¡Perfil guardado con éxito en la nube!');
                 cargarProfesionales();
             } catch (e) {
                 console.error("Error al guardar: ", e);
-                alert('Hubo un error al guardar el perfil.');
+                mostrarToast('Error al conectar con la base de datos.');
             }
         };
 
         async function cargarProfesionales() {
             const contenedor = document.getElementById('listaDestacados');
-            contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">Cargando...</div>';
+            contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">Cargando profesionales...</div>';
             
             try {
                 const querySnapshot = await getDocs(collection(db, "profesionales"));
@@ -304,7 +310,7 @@
         cargarProfesionales();
     </script>
 
-    <!-- SCRIPT DE INTERFAZ Y MODALES -->
+    <!-- SCRIPT DE INTERFAZ Y MODALES (SIN ALERTAS INTRUSIVAS) -->
     <script>
         function abrirModal() {
             document.getElementById('modalPerfil').classList.remove('hidden');
@@ -325,17 +331,25 @@
         function realizarBusqueda() {
             const query = document.getElementById('inputBusqueda').value;
             const ciudad = document.getElementById('selectCiudad').value;
-            alert(`Buscando: "${query || 'Todos'}" en "${ciudad || 'Todas las ciudades'}"`);
+            mostrarToast(`Filtros aplicados en la plataforma`);
         }
         function enviarSolicitudArco() {
             const nombre = document.getElementById('arcoNombre').value;
             const email = document.getElementById('arcoEmail').value;
             if(!nombre || !email) {
-                alert('Por favor ingresa tu nombre y correo electrónico.');
+                mostrarToast('Por favor completa tu nombre y correo.');
                 return;
             }
-            alert('Su solicitud ha sido enviada correctamente. Procesaremos su requerimiento a la brevedad.');
             cerrarModalArco();
+            mostrarToast('Solicitud enviada correctamente.');
+        }
+        function mostrarToast(mensaje) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = mensaje;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
         }
     </script>
 </body>
