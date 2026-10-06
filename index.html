@@ -23,7 +23,7 @@
                 </a>
             </div>
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
-                <a href="#" class="hover:text-blue-600 transition">Buscar</a>
+                <a href="#buscar" class="hover:text-blue-600 transition">Buscar</a>
                 <a href="#categorias" class="hover:text-blue-600 transition">Profesionales</a>
                 <a href="#legal" class="hover:text-blue-600 transition">Marco Legal & ARCO</a>
             </nav>
@@ -52,11 +52,11 @@
                         Conecta profesionales, empresas y marcas en un solo lugar. Busca por profesión, especialidad, ciudad o servicio.
                     </p>
 
-                    <!-- Caja de Búsqueda -->
+                    <!-- Caja de Búsqueda Mejorada -->
                     <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-100 flex flex-col sm:flex-row gap-3">
                         <div class="flex-1 flex items-center px-3 border-b sm:border-b-0 sm:border-r border-slate-200 py-2 sm:py-0">
                             <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
-                            <input type="text" id="inputBusqueda" placeholder="Profesión, especialidad o servicio..." class="w-full focus:outline-none text-sm text-slate-700 placeholder-slate-400">
+                            <input type="text" id="inputBusqueda" placeholder="Profesión, categoría, nombre..." class="w-full focus:outline-none text-sm text-slate-700 placeholder-slate-400">
                         </div>
                         <div class="sm:w-48 flex items-center px-3 py-2 sm:py-0">
                             <select id="selectCiudad" class="w-full focus:outline-none text-sm text-slate-700 bg-transparent cursor-pointer">
@@ -90,34 +90,45 @@
         <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200">
             <h2 class="text-2xl font-bold text-slate-900 mb-8 text-center">Explora por categoría</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                <div onclick="filtrarPorCategoria('Salud')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">💊</span>
                     <h3 class="font-semibold text-sm text-slate-800">Salud y Farmacia</h3>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                <div onclick="filtrarPorCategoria('Legal')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">⚖️</span>
                     <h3 class="font-semibold text-sm text-slate-800">Legal</h3>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                <div onclick="filtrarPorCategoria('Tecnología')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">💻</span>
                     <h3 class="font-semibold text-sm text-slate-800">Tecnología</h3>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                <div onclick="filtrarPorCategoria('Diseño')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">🎨</span>
                     <h3 class="font-semibold text-sm text-slate-800">Diseño y Arte</h3>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                <div onclick="filtrarPorCategoria('Consultoría')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">📊</span>
                     <h3 class="font-semibold text-sm text-slate-800">Consultoría</h3>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                <div onclick="filtrarPorCategoria('Ingeniería')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
                     <span class="text-3xl mb-2 block">🏗️</span>
                     <h3 class="font-semibold text-sm text-slate-800">Ingeniería</h3>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN DE MARCO LEGAL Y DERECHOS ARCO (Estilo Tarjetas) -->
+        <!-- SECCIÓN DE RESULTADOS DE BÚSQUEDA / DIRECTORIO COMPLETO -->
+        <section id="buscar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-slate-900">Directorio General</h3>
+                <span id="contadorResultados" class="text-xs font-medium text-slate-500">Mostrando registros activos</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gridDirectorioCompleto">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE MARCO LEGAL Y DERECHOS ARCO -->
         <section id="legal" class="bg-slate-900 text-white py-16 mt-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
@@ -191,7 +202,18 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Profesión o Especialidad</label>
-                    <input type="text" id="regProfesion" placeholder="Ej. Farmacéutico" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    <input type="text" id="regProfesion" placeholder="Ej. Farmacéutico o Abogado" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Categoría Principal</label>
+                    <select id="regCategoria" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-blue-500">
+                        <option value="Salud">Salud y Farmacia</option>
+                        <option value="Legal">Legal</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Diseño">Diseño y Arte</option>
+                        <option value="Consultoría">Consultoría</option>
+                        <option value="Ingeniería">Ingeniería</option>
+                    </select>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 mb-1">Ciudad</label>
@@ -229,7 +251,7 @@
         <span id="toastMsg">Operación exitosa</span>
     </div>
 
-    <!-- CONFIGURACIÓN Y CONEXIÓN CON FIREBASE -->
+    <!-- CONFIGURACIÓN Y CONEXIÓN CON FIREBASE & BÚSQUEDA INTELIGENTE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -247,9 +269,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        let listaGlobalProfesionales = [];
+
         window.guardarPerfilFirebase = async function() {
             const nombre = document.getElementById('regNombre').value;
             const profesion = document.getElementById('regProfesion').value;
+            const categoria = document.getElementById('regCategoria').value;
             const ciudad = document.getElementById('regCiudad').value;
 
             if(!nombre || !profesion || !ciudad) {
@@ -261,6 +286,7 @@
                 await addDoc(collection(db, "profesionales"), {
                     nombre: nombre,
                     profesion: profesion,
+                    categoria: categoria || 'General',
                     ciudad: ciudad,
                     creado: new Date()
                 });
@@ -274,43 +300,113 @@
         };
 
         async function cargarProfesionales() {
-            const contenedor = document.getElementById('listaDestacados');
-            contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">Cargando profesionales...</div>';
+            const contenedorDestacados = document.getElementById('listaDestacados');
+            const contenedorDirectorio = document.getElementById('gridDirectorioCompleto');
+            
+            contenedorDestacados.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">Cargando profesionales...</div>';
+            contenedorDirectorio.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-slate-400">Cargando directorio...</div>';
             
             try {
                 const querySnapshot = await getDocs(collection(db, "profesionales"));
-                contenedor.innerHTML = '';
+                listaGlobalProfesionales = [];
                 
-                if(querySnapshot.empty) {
-                    contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">No hay profesionales registrados aún. ¡Sé el primero!</div>';
-                    return;
-                }
-
                 querySnapshot.forEach((doc) => {
-                    const p = doc.data();
-                    const iniciales = p.nombre ? p.nombre.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : 'PF';
-                    
-                    const htmlItem = `
-                        <div class="py-3.5 flex items-center space-x-4">
-                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">${iniciales}</div>
-                            <div>
-                                <h3 class="text-sm font-semibold text-slate-900">${p.nombre}</h3>
-                                <p class="text-xs text-slate-500">${p.profesion} · ${p.ciudad}</p>
-                            </div>
-                        </div>
-                    `;
-                    contenedor.innerHTML += htmlItem;
+                    listaGlobalProfesionales.push({ id: doc.id, ...doc.data() });
                 });
+
+                renderizarDatos(listaGlobalProfesionales);
             } catch (e) {
                 console.error("Error cargando datos: ", e);
-                contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-red-400">Error al cargar datos de Firebase.</div>';
+                contenedorDestacados.innerHTML = '<div class="py-3.5 text-center text-xs text-red-400">Error al cargar datos.</div>';
+                contenedorDirectorio.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-red-400">Error al conectar con la base de datos.</div>';
             }
         }
+
+        function renderizarDatos(datos) {
+            const contenedorDestacados = document.getElementById('listaDestacados');
+            const contenedorDirectorio = document.getElementById('gridDirectorioCompleto');
+            const contador = document.getElementById('contadorResultados');
+
+            contenedorDestacados.innerHTML = '';
+            contenedorDirectorio.innerHTML = '';
+            contador.innerText = `Mostrando ${datos.length} profesionales`;
+
+            if(datos.length === 0) {
+                contenedorDestacados.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">No hay profesionales registrados.</div>';
+                contenedorDirectorio.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400 font-medium">No se encontraron profesionales con ese criterio.</div>';
+                return;
+            }
+
+            // Renderizar destacados (primeros 4)
+            datos.slice(0, 4).forEach(p => {
+                const iniciales = p.nombre ? p.nombre.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : 'PF';
+                contenedorDestacados.innerHTML += `
+                    <div class="py-3.5 flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">${iniciales}</div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-slate-900">${p.nombre}</h3>
+                            <p class="text-xs text-slate-500">${p.profesion} · ${p.ciudad}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Renderizar grid completo
+            datos.forEach(p => {
+                const iniciales = p.nombre ? p.nombre.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : 'PF';
+                const cat = p.categoria || 'General';
+                contenedorDirectorio.innerHTML += `
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-base">${iniciales}</div>
+                                <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-full uppercase">${cat}</span>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-base">${p.nombre}</h4>
+                            <p class="text-xs font-semibold text-blue-600 mt-0.5">${p.profesion}</p>
+                            <p class="text-xs text-slate-500 mt-2 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot"></i> ${p.ciudad}
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-xs text-emerald-600 font-medium flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Verificado</span>
+                            <button onclick="mostrarToast('Conectando con ${p.nombre}...')" class="text-xs text-blue-600 hover:text-blue-700 font-semibold">Contactar →</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.realizarBusqueda = function() {
+            const query = document.getElementById('inputBusqueda').value.toLowerCase().trim();
+            const ciudadFiltro = document.getElementById('selectCiudad').value;
+
+            const filtrados = listaGlobalProfesionales.filter(p => {
+                const nombre = (p.nombre || '').toLowerCase();
+                const profesion = (p.profesion || '').toLowerCase();
+                const categoria = (p.categoria || '').toLowerCase();
+                const ciudad = (p.ciudad || '').toLowerCase();
+
+                const coincideTexto = query === '' || nombre.includes(query) || profesion.includes(query) || categoria.includes(query);
+                const coincideCiudad = ciudadFiltro === '' || ciudad.includes(ciudadFiltro.toLowerCase());
+
+                return coincideTexto && coincideCiudad;
+            });
+
+            renderizarDatos(filtrados);
+            document.getElementById('buscar').scrollIntoView({ behavior: 'smooth' });
+            mostrarToast(`Búsqueda actualizada (${filtrados.length} resultados)`);
+        };
+
+        window.filtrarPorCategoria = function(nombreCategoria) {
+            document.getElementById('inputBusqueda').value = nombreCategoria;
+            realizarBusqueda();
+        };
 
         cargarProfesionales();
     </script>
 
-    <!-- SCRIPT DE INTERFAZ Y MODALES (SIN ALERTAS INTRUSIVAS) -->
+    <!-- SCRIPT DE INTERFAZ Y MODALES -->
     <script>
         function abrirModal() {
             document.getElementById('modalPerfil').classList.remove('hidden');
@@ -327,11 +423,6 @@
         function cerrarModalArco() {
             document.getElementById('modalArco').classList.remove('flex');
             document.getElementById('modalArco').classList.add('hidden');
-        }
-        function realizarBusqueda() {
-            const query = document.getElementById('inputBusqueda').value;
-            const ciudad = document.getElementById('selectCiudad').value;
-            mostrarToast(`Filtros aplicados en la plataforma`);
         }
         function enviarSolicitudArco() {
             const nombre = document.getElementById('arcoNombre').value;
