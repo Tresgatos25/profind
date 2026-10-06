@@ -14,6 +14,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
+    <!-- HEADER / NAVEGACIÓN -->
     <header class="w-full bg-white border-b border-slate-100 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -24,9 +25,10 @@
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
                 <a href="#buscar" class="hover:text-blue-600 transition">Buscar</a>
                 <a href="#categorias" class="hover:text-blue-600 transition">Profesionales</a>
+                <button onclick="abrirModalEditar()" class="hover:text-blue-600 transition">Editar mi perfil</button>
                 <a href="#legal" class="hover:text-blue-600 transition">Marco Legal & ARCO</a>
             </nav>
-            <div>
+            <div class="flex items-center gap-3">
                 <button onclick="abrirModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition shadow-sm">
                     Crear perfil
                 </button>
@@ -34,6 +36,7 @@
         </div>
     </header>
 
+    <!-- SECCIÓN PRINCIPAL (HERO SECTION) -->
     <main class="flex-grow">
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -71,6 +74,7 @@
                     </div>
                 </div>
 
+                <!-- Columna Derecha: Destacados desde Firebase -->
                 <div class="lg:col-span-5">
                     <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
                         <h2 class="text-lg font-bold text-slate-900 mb-4">Profesionales destacados</h2>
@@ -83,6 +87,7 @@
             </div>
         </section>
 
+        <!-- SECCIÓN DE CATEGORÍAS -->
         <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200">
             <h2 class="text-2xl font-bold text-slate-900 mb-8 text-center">Explora por categoría</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 text-center">
@@ -121,6 +126,7 @@
             </div>
         </section>
 
+        <!-- DIRECTORIO GENERAL -->
         <section id="buscar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-xl font-bold text-slate-900">Directorio General</h3>
@@ -131,6 +137,7 @@
             </div>
         </section>
 
+        <!-- SECCIÓN DE MARCO LEGAL Y DERECHOS ARCO (Estilo FarmaFind) -->
         <section id="legal" class="bg-slate-900 text-white py-16 mt-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
@@ -180,6 +187,7 @@
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-200 py-8 text-center text-sm text-slate-500">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p>&copy; 2026 PROFIND - Directorio Profesional en El Salvador. Todos los derechos reservados.</p>
@@ -190,6 +198,7 @@
         </div>
     </footer>
 
+    <!-- MODAL DE CREAR PERFIL -->
     <div id="modalPerfil" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden items-center justify-center z-50 px-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="cerrarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
@@ -225,11 +234,49 @@
                     <label class="block text-xs font-semibold text-slate-700 mb-1">WhatsApp o Teléfono de Contacto</label>
                     <input type="text" id="regContacto" placeholder="Ej. +503 7000-0000" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Crea tu PIN / ID Personal de Edición</label>
+                    <input type="text" id="regPin" placeholder="Ej. miClave123 (para editar o borrar tu perfil)" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    <span class="text-[10px] text-slate-400 mt-0.5 block">Guarda este PIN para modificar o eliminar tu perfil cuando quieras.</span>
+                </div>
                 <button onclick="guardarPerfilFirebase()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-medium transition">Guardar Perfil en la Nube</button>
             </div>
         </div>
     </div>
 
+    <!-- MODAL EDITAR O BORRAR CON PIN -->
+    <div id="modalEditar" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="cerrarModalEditar()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Gestionar mi Perfil</h3>
+            <p class="text-xs text-slate-500 mb-4">Ingresa tu PIN personal para actualizar tus datos o eliminar tu perfil.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Tu PIN o ID Personal</label>
+                    <input type="text" id="editPinInput" placeholder="Ingresa tu PIN creado" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <button onclick="buscarPerfilPorPin()" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-2.5 rounded-lg text-sm font-medium transition">Buscar mi Perfil</button>
+
+                <div id="panelEdicionOculto" class="hidden space-y-3 pt-3 border-t border-slate-100">
+                    <input type="hidden" id="editDocId">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nuevo WhatsApp / Contacto</label>
+                        <input type="text" id="editContacto" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nueva Profesión</label>
+                        <input type="text" id="editProfesion" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        <button onclick="actualizarPerfilFirebase()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-xs font-semibold transition">Actualizar Datos</button>
+                        <button onclick="eliminarPerfilFirebase()" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2.5 rounded-lg text-xs font-semibold transition">Eliminar Perfil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ARCO -->
     <div id="modalArco" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden items-center justify-center z-50 px-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
             <button onclick="cerrarModalArco()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
@@ -250,14 +297,16 @@
         </div>
     </div>
 
+    <!-- Toast Notification Box -->
     <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 text-xs font-medium flex items-center gap-2.5">
         <i class="fa-solid fa-circle-check text-emerald-400"></i>
         <span id="toastMsg">Operación exitosa</span>
     </div>
 
+    <!-- SCRIPT DE FIREBASE Y GESTIÓN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCQ_m07Je88uxQ_ijgPEuwC89JCWMYRO1Q",
@@ -280,9 +329,10 @@
             const categoria = document.getElementById('regCategoria').value;
             const ciudad = document.getElementById('regCiudad').value.trim();
             const contacto = document.getElementById('regContacto').value.trim();
+            const pin = document.getElementById('regPin').value.trim();
 
-            if(!nombre || !profesion || !ciudad || !contacto) {
-                mostrarToast('Por favor completa todos los campos.');
+            if(!nombre || !profesion || !ciudad || !contacto || !pin) {
+                mostrarToast('Por favor completa todos los campos y tu PIN.');
                 return;
             }
 
@@ -293,18 +343,79 @@
                     categoria: categoria || 'General',
                     ciudad: ciudad,
                     contacto: contacto,
+                    pin: pin,
                     creado: new Date()
                 });
                 cerrarModal();
-                mostrarToast('¡Perfil guardado con éxito en la nube!');
+                mostrarToast('¡Perfil guardado con éxito! Tu PIN es tu llave para editar.');
                 document.getElementById('regNombre').value = '';
                 document.getElementById('regProfesion').value = '';
                 document.getElementById('regCiudad').value = '';
                 document.getElementById('regContacto').value = '';
+                document.getElementById('regPin').value = '';
                 cargarProfesionales();
             } catch (e) {
                 console.error("Error al guardar: ", e);
                 mostrarToast('Error al conectar con la base de datos.');
+            }
+        };
+
+        window.buscarPerfilPorPin = function() {
+            const pinBuscado = document.getElementById('editPinInput').value.trim();
+            if(!pinBuscado) {
+                mostrarToast('Ingresa tu PIN de edición.');
+                return;
+            }
+
+            const encontrado = listaGlobalProfesionales.find(p => p.pin === pinBuscado);
+            if(!encontrado) {
+                mostrarToast('PIN incorrecto o perfil no encontrado.');
+                return;
+            }
+
+            document.getElementById('editDocId').value = encontrado.id;
+            document.getElementById('editContacto').value = encontrado.contacto || '';
+            document.getElementById('editProfesion').value = encontrado.profesion || '';
+            document.getElementById('panelEdicionOculto').classList.remove('hidden');
+            mostrarToast('¡Perfil encontrado con éxito!');
+        };
+
+        window.actualizarPerfilFirebase = async function() {
+            const docId = document.getElementById('editDocId').value;
+            const nuevoContacto = document.getElementById('editContacto').value.trim();
+            const nuevaProfesion = document.getElementById('editProfesion').value.trim();
+
+            if(!docId) return;
+
+            try {
+                const docRef = doc(db, "profesionales", docId);
+                await updateDoc(docRef, {
+                    contacto: nuevoContacto,
+                    profesion: nuevaProfesion
+                });
+                cerrarModalEditar();
+                mostrarToast('¡Perfil actualizado correctamente!');
+                cargarProfesionales();
+            } catch(e) {
+                console.error("Error al actualizar:", e);
+                mostrarToast('Error al actualizar el perfil.');
+            }
+        };
+
+        window.eliminarPerfilFirebase = async function() {
+            const docId = document.getElementById('editDocId').value;
+            if(!docId) return;
+
+            if(!confirm('¿Estás seguro de eliminar permanentemente tu perfil?')) return;
+
+            try {
+                await deleteDoc(doc(db, "profesionales", docId));
+                cerrarModalEditar();
+                mostrarToast('Perfil eliminado del directorio.');
+                cargarProfesionales();
+            } catch(e) {
+                console.error("Error al eliminar:", e);
+                mostrarToast('Error al eliminar el perfil.');
             }
         };
 
@@ -321,14 +432,21 @@
                 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    listaGlobalProfesionales.push({ 
-                        id: doc.id, 
-                        nombre: data.nombre || data.Nombre || 'Profesional', 
-                        profesion: data.profesion || data.Profesion || 'Especialista', 
-                        categoria: data.categoria || data.Categoria || 'General', 
-                        ciudad: data.ciudad || data.Ciudad || 'El Salvador',
-                        contacto: data.contacto || data.Contacto || '' 
-                    });
+                    const nombreVal = data.nombre || data.Nombre || '';
+                    const profVal = data.profesion || data.Profesion || '';
+                    const ciudadVal = data.ciudad || data.Ciudad || 'El Salvador';
+                    
+                    if(nombreVal && nombreVal.toLowerCase() !== 'profesional') {
+                        listaGlobalProfesionales.push({ 
+                            id: doc.id, 
+                            nombre: nombreVal, 
+                            profesion: profVal || 'Especialista', 
+                            categoria: data.categoria || data.Categoria || 'General', 
+                            ciudad: ciudadVal,
+                            contacto: data.contacto || data.Contacto || '',
+                            pin: data.pin || ''
+                        });
+                    }
                 });
 
                 renderizarDatos(listaGlobalProfesionales);
@@ -354,23 +472,20 @@
                 return;
             }
 
-            // Renderizar destacados (primeros 4)
             datos.slice(0, 4).forEach(p => {
-                const nombreVal = p.nombre || 'Profesional';
-                const profVal = p.profesion || 'Especialista';
-                const ciudadVal = p.ciudad || 'El Salvador';
-                const contactoVal = p.contacto || '';
-                const iniciales = nombreVal.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'PF';
-                
-                let botonContacto = contactoVal ? `<a href="https://wa.me/${contactoVal.replace(/[^0-9]/g, '')}" target="_blank" class="text-xs text-emerald-600 font-semibold hover:underline">WhatsApp ↗</a>` : '';
+                const iniciales = p.nombre.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'PF';
+                let limpioNumero = p.contacto ? p.contacto.replace(/[^0-9]/g, '') : '';
+                let botonContacto = limpioNumero.length >= 8 ? 
+                    `<a href="https://wa.me/${limpioNumero}" target="_blank" class="text-xs text-emerald-600 font-semibold hover:underline">WhatsApp ↗</a>` : 
+                    `<span class="text-xs text-slate-400">Directo</span>`;
 
                 contenedorDestacados.innerHTML += `
                     <div class="py-3.5 flex items-center justify-between">
                         <div class="flex items-center space-x-4">
                             <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">${iniciales}</div>
                             <div>
-                                <h3 class="text-sm font-semibold text-slate-900">${nombreVal}</h3>
-                                <p class="text-xs text-slate-500">${profVal} · ${ciudadVal}</p>
+                                <h3 class="text-sm font-semibold text-slate-900">${p.nombre}</h3>
+                                <p class="text-xs text-slate-500">${p.profesion} · ${p.ciudad}</p>
                             </div>
                         </div>
                         <div>${botonContacto}</div>
@@ -378,31 +493,24 @@
                 `;
             });
 
-            // Renderizar grid completo
             datos.forEach(p => {
-                const nombreVal = p.nombre || 'Profesional';
-                const profVal = p.profesion || 'Especialista';
-                const ciudadVal = p.ciudad || 'El Salvador';
-                const catVal = p.categoria || 'General';
-                const contactoVal = p.contacto || 'Sin contacto';
-                const iniciales = nombreVal.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'PF';
-                
-                let enlaceWhatsApp = contactoVal.replace(/[^0-9]/g, '');
-                let botonAccion = enlaceWhatsApp.length >= 8 ? 
-                    `<a href="https://wa.me/${enlaceWhatsApp}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition"><i class="fa-brands fa-whatsapp"></i> Contactar</a>` : 
-                    `<span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-phone"></i> ${contactoVal}</span>`;
+                const iniciales = p.nombre.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'PF';
+                let limpioNumero = p.contacto ? p.contacto.replace(/[^0-9]/g, '') : '';
+                let botonAccion = limpioNumero.length >= 8 ? 
+                    `<a href="https://wa.me/${limpioNumero}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm"><i class="fa-brands fa-whatsapp text-sm"></i> Contactar</a>` : 
+                    `<span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-phone"></i> ${p.contacto || 'Sin contacto'}</span>`;
 
                 contenedorDirectorio.innerHTML += `
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-base">${iniciales}</div>
-                                <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-full uppercase">${catVal}</span>
+                                <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-full uppercase">${p.categoria}</span>
                             </div>
-                            <h4 class="font-bold text-slate-900 text-base">${nombreVal}</h4>
-                            <p class="text-xs font-semibold text-blue-600 mt-0.5">${profVal}</p>
+                            <h4 class="font-bold text-slate-900 text-base">${p.nombre}</h4>
+                            <p class="text-xs font-semibold text-blue-600 mt-0.5">${p.profesion}</p>
                             <p class="text-xs text-slate-500 mt-2 flex items-center gap-1">
-                                <i class="fa-solid fa-location-dot"></i> ${ciudadVal}
+                                <i class="fa-solid fa-location-dot"></i> ${p.ciudad}
                             </p>
                         </div>
                         <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
@@ -419,14 +527,8 @@
             const ciudadFiltro = document.getElementById('selectCiudad').value;
 
             const filtrados = listaGlobalProfesionales.filter(p => {
-                const nombre = (p.nombre || '').toLowerCase();
-                const profesion = (p.profesion || '').toLowerCase();
-                const categoria = (p.categoria || '').toLowerCase();
-                const ciudad = (p.ciudad || '').toLowerCase();
-
-                const coincideTexto = query === '' || nombre.includes(query) || profesion.includes(query) || categoria.includes(query);
-                const coincideCiudad = ciudadFiltro === '' || ciudad.includes(ciudadFiltro.toLowerCase());
-
+                const coincideTexto = query === '' || p.nombre.toLowerCase().includes(query) || p.profesion.toLowerCase().includes(query) || p.categoria.toLowerCase().includes(query);
+                const coincideCiudad = ciudadFiltro === '' || p.ciudad.toLowerCase().includes(ciudadFiltro.toLowerCase());
                 return coincideTexto && coincideCiudad;
             });
 
@@ -452,6 +554,7 @@
         cargarProfesionales();
     </script>
 
+    <!-- SCRIPT DE INTERFAZ -->
     <script>
         function abrirModal() {
             document.getElementById('modalPerfil').classList.remove('hidden');
@@ -460,6 +563,16 @@
         function cerrarModal() {
             document.getElementById('modalPerfil').classList.remove('flex');
             document.getElementById('modalPerfil').classList.add('hidden');
+        }
+        function abrirModalEditar() {
+            document.getElementById('editPinInput').value = '';
+            document.getElementById('panelEdicionOculto').classList.add('hidden');
+            document.getElementById('modalEditar').classList.remove('hidden');
+            document.getElementById('modalEditar').classList.add('flex');
+        }
+        function cerrarModalEditar() {
+            document.getElementById('modalEditar').classList.remove('flex');
+            document.getElementById('modalEditar').classList.add('hidden');
         }
         function abrirModalArco() {
             document.getElementById('modalArco').classList.remove('hidden');
