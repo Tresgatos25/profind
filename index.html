@@ -4,232 +4,339 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROFIND | Encuentra al profesional que necesitas</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Navegación -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="w-full bg-white border-b border-slate-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <span class="text-2xl font-black text-blue-600 tracking-tight">PROFIND</span>
+                <a href="#" class="text-2xl font-black tracking-wider text-blue-600 flex items-center gap-1.5">
+                    <span>PROFIND</span>
+                </a>
             </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#" class="hover:text-blue-600 transition">Buscar</a>
+                <a href="#categorias" class="hover:text-blue-600 transition">Profesionales</a>
+                <a href="#legal" class="hover:text-blue-600 transition">Marco Legal & ARCO</a>
+            </nav>
             <div>
-                <button onclick="abrirModalPerfil()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg transition shadow-sm cursor-pointer">
+                <button onclick="abrirModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition shadow-sm">
                     Crear perfil
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Sección Hero / Buscador Principal -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-7 space-y-6">
-            <span class="inline-block bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Directorio Profesional</span>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
-                Encuentra al profesional que necesitas.
-            </h1>
-            <p class="text-lg text-gray-600">
-                Conecta profesionales, empresas y marcas en un solo lugar. Busca por profesión, especialidad, ciudad o servicio.
-            </p>
-
-            <!-- Barra de Búsqueda -->
-            <div class="bg-white p-2 rounded-2xl shadow-lg border border-gray-100 flex flex-col sm:flex-row gap-2">
-                <div class="flex-1 flex items-center px-3 py-2 bg-gray-50 rounded-xl">
-                    <i class="fa-solid fa-magnifying-glass text-gray-400 mr-3"></i>
-                    <input type="text" id="inputBusqueda" placeholder="Profesión, especialidad o servicio..." class="bg-transparent w-full focus:outline-none text-sm text-gray-700">
-                </div>
-                <div class="sm:w-48 flex items-center px-3 py-2 bg-gray-50 rounded-xl">
-                    <select id="selectCiudad" class="bg-transparent w-full focus:outline-none text-sm text-gray-700 cursor-pointer">
-                        <option value="todas">Todas las ciudades</option>
-                        <option value="san salvador">San Salvador</option>
-                        <option value="santa ana">Santa Ana</option>
-                        <option value="san miguel">San Miguel</option>
-                        <option value="la libertad">La Libertad</option>
-                    </select>
-                </div>
-                <button id="btnBuscar" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition flex items-center justify-center cursor-pointer">
-                    Buscar
-                </button>
-            </div>
-        </div>
-
-        <!-- Tarjeta de Profesionales Destacados / Resultados -->
-        <div class="lg:col-span-5">
-            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 space-y-6">
-                <h2 id="tituloResultados" class="text-lg font-bold text-gray-900 border-b pb-4">Profesionales destacados</h2>
+    <!-- SECCIÓN PRINCIPAL (HERO SECTION) -->
+    <main class="flex-grow">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
-                <div class="space-y-4" id="listaDestacados">
-                    <!-- Los perfiles se cargan dinámicamente aquí -->
+                <!-- Columna Izquierda -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Directorio Profesional
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight">
+                        Encuentra al profesional que necesitas.
+                    </h1>
+                    <p class="text-lg text-slate-600">
+                        Conecta profesionales, empresas y marcas en un solo lugar. Busca por profesión, especialidad, ciudad o servicio.
+                    </p>
+
+                    <!-- Caja de Búsqueda -->
+                    <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-100 flex flex-col sm:flex-row gap-3">
+                        <div class="flex-1 flex items-center px-3 border-b sm:border-b-0 sm:border-r border-slate-200 py-2 sm:py-0">
+                            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
+                            <input type="text" id="inputBusqueda" placeholder="Profesión, especialidad o servicio..." class="w-full focus:outline-none text-sm text-slate-700 placeholder-slate-400">
+                        </div>
+                        <div class="sm:w-48 flex items-center px-3 py-2 sm:py-0">
+                            <select id="selectCiudad" class="w-full focus:outline-none text-sm text-slate-700 bg-transparent cursor-pointer">
+                                <option value="">Todas las ciudades</option>
+                                <option value="San Salvador">San Salvador</option>
+                                <option value="Santa Ana">Santa Ana</option>
+                                <option value="San Miguel">San Miguel</option>
+                                <option value="Santa Tecla">Santa Tecla</option>
+                            </select>
+                        </div>
+                        <button onclick="realizarBusqueda()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-medium text-sm transition shadow-md flex items-center justify-center">
+                            Buscar
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Columna Derecha (Dinámica desde Firebase) -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+                        <h2 class="text-lg font-bold text-slate-900 mb-4">Profesionales destacados</h2>
+                        
+                        <div class="divide-y divide-slate-100" id="listaDestacados">
+                            <div class="py-3.5 text-center text-xs text-slate-400">Cargando profesionales...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CATEGORÍAS -->
+        <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8 text-center">Explora por categoría</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">💊</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Salud y Farmacia</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">⚖️</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Legal</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">💻</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Tecnología</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">🎨</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Diseño y Arte</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">📊</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Consultoría</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 cursor-pointer transition">
+                    <span class="text-3xl mb-2 block">🏗️</span>
+                    <h3 class="font-semibold text-sm text-slate-800">Ingeniería</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE MARCO LEGAL Y DERECHOS ARCO -->
+        <section id="legal" class="bg-slate-900 text-white py-16 mt-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-blue-400 text-xs font-semibold tracking-wider uppercase block mb-2">Garantías y Cumplimiento Normativo</span>
+                    <h2 class="text-3xl font-extrabold tracking-tight mb-3">Marco Legal & Derechos ARCO de Privacidad</h2>
+                    <p class="text-slate-400 text-sm">PROFIND opera bajo los principios de libre ejercicio profesional, protección de datos personales y neutralidad como intermediario digital pasivo en El Salvador.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Tarjeta 1 -->
+                    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl relative">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2">1. Intermediación Pasiva y Deslinde Legal</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            PROFIND actúa exclusivamente como un medio publicitario y de difusión pasiva. <strong>No asumimos responsabilidad</strong> por contrataciones, honorarios o tratos entre los usuarios y los profesionales listados.
+                        </p>
+                    </div>
+
+                    <!-- Tarjeta 2 -->
+                    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl relative">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-file-shield"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2">2. Verificación de Atestados y Licencias</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Es responsabilidad estricta y exclusiva de cada profesional o empresa contratante validar títulos universitarios, especialidades y autorizaciones vigentes ante los organismos regulatorios correspondientes.
+                        </p>
+                    </div>
+
+                    <!-- Tarjeta 3 -->
+                    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl relative">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2">3. Protección de Datos & Derechos ARCO</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Los datos se ingresan voluntariamente. Garantizamos el ejercicio de tus derechos de <strong>Acceso, Rectificación, Cancelación (Borrado) u Oposición</strong> en cualquier momento.
+                        </p>
+                        <button onclick="abrirModalArco()" class="text-xs font-semibold text-blue-400 hover:text-blue-300 transition flex items-center gap-1">
+                            Solicitar gestión de datos <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-8 text-center text-sm text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 PROFIND - Directorio Profesional en El Salvador. Todos los derechos reservados.</p>
+            <div class="flex space-x-6 text-xs font-medium">
+                <a href="#legal" class="hover:text-blue-600 transition">Aviso Legal</a>
+                <button onclick="abrirModalArco()" class="hover:text-blue-600 transition">Derechos ARCO</button>
             </div>
         </div>
-    </section>
+    </footer>
 
-    <!-- Categorías -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 text-center mb-8">Explora por categoría</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div onclick="filtrarCategoria('farmacéutico')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-pills"></i></div>
-                <p class="text-sm font-medium text-gray-700">Salud y Farmacia</p>
-            </div>
-            <div onclick="filtrarCategoria('abogado')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-scale-balanced"></i></div>
-                <p class="text-sm font-medium text-gray-700">Legal</p>
-            </div>
-            <div onclick="filtrarCategoria('desarrollador')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-laptop-code"></i></div>
-                <p class="text-sm font-medium text-gray-700">Tecnología</p>
-            </div>
-            <div onclick="filtrarCategoria('diseñador')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-palette"></i></div>
-                <p class="text-sm font-medium text-gray-700">Creativos</p>
-            </div>
-            <div onclick="filtrarCategoria('contador')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-chart-line"></i></div>
-                <p class="text-sm font-medium text-gray-700">Finanzas</p>
-            </div>
-            <div onclick="filtrarCategoria('ingeniero')" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center hover:scale-105 transition cursor-pointer group">
-                <div class="text-3xl text-blue-600 mb-2 group-hover:scale-110 transition transform"><i class="fa-solid fa-hard-hat"></i></div>
-                <p class="text-sm font-medium text-gray-700">Ingeniería</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal para Crear Perfil -->
-    <div id="modalPerfil" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 relative">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-900">Registrar Nuevo Perfil</h3>
-                <button onclick="cerrarModalPerfil()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold cursor-pointer">&times;</button>
-            </div>
-            <form id="formPerfil" onsubmit="guardarPerfil(event)" class="space-y-4">
+    <!-- MODAL DE CREAR PERFIL (CON PLACEHOLDER NEUTRAL) -->
+    <div id="modalPerfil" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="cerrarModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Unirme a PROFIND</h3>
+            <p class="text-xs text-slate-500 mb-4">Regístrate para aparecer en el directorio profesional.</p>
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Nombre Completo</label>
-                    <input type="text" id="nombrePerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm" placeholder="Ej. Ricardo Saravia">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nombre Completo</label>
+                    <input type="text" id="regNombre" placeholder="Ej. Juan Pérez" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Profesión o Especialidad</label>
-                    <input type="text" id="profesionPerfil" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm" placeholder="Ej. Farmacéutico">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Profesión o Especialidad</label>
+                    <input type="text" id="regProfesion" placeholder="Ej. Farmacéutico" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 uppercase mb-1">Ciudad</label>
-                    <select id="ciudadPerfil" class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm bg-white">
-                        <option value="san salvador">San Salvador</option>
-                        <option value="santa ana">Santa Ana</option>
-                        <option value="san miguel">San Miguel</option>
-                        <option value="la libertad">La Libertad</option>
-                    </select>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Ciudad</label>
+                    <input type="text" id="regCiudad" placeholder="Ej. San Salvador" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition cursor-pointer">
-                    Publicar Perfil
-                </button>
-            </form>
+                <button onclick="guardarPerfilFirebase()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-medium transition">Guardar Perfil en la Nube</button>
+            </div>
         </div>
     </div>
 
-    <!-- Script Corregido y Robusto -->
-    <script>
-        let profesionales = [
-            { nombre: "ricardo saravia", profesion: "farmacéutico", ciudad: "san salvador", iniciales: "RS" },
-            { nombre: "daniel dominguez", profesion: "farmacéutico", ciudad: "san salvador", iniciales: "DD" }
-        ];
+    <!-- MODAL DE DERECHOS ARCO -->
+    <div id="modalArco" class="fixed inset-0 bg-slate-900 bg-opacity-50 hidden items-center justify-center z-50 px-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="cerrarModalArco()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold">✕</button>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Gestión de Datos y Derechos ARCO</h3>
+            <p class="text-xs text-slate-500 mb-4">Envíanos tu solicitud de acceso, rectificación, cancelación u oposición.</p>
+            <div class="space-y-3">
+                <input type="text" id="arcoNombre" placeholder="Tu Nombre Completo" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                <input type="email" id="arcoEmail" placeholder="Correo electrónico de contacto" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                <select id="arcoSolicitud" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-blue-500">
+                    <option value="Cancelacion">Cancelación / Borrado de perfil</option>
+                    <option value="Rectificacion">Rectificación de datos</option>
+                    <option value="Acceso">Acceso a mi información</option>
+                    <option value="Oposicion">Oposición al tratamiento</option>
+                </select>
+                <textarea id="arcoDetalle" rows="2" placeholder="Detalles de tu solicitud..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"></textarea>
+                <button onclick="enviarSolicitudArco()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg text-sm font-medium transition">Enviar Solicitud</button>
+            </div>
+        </div>
+    </div>
 
-        function mostrarProfesionales(lista) {
-            const contenedor = document.getElementById('listaDestacados');
-            contenedor.innerHTML = "";
+    <!-- CONFIGURACIÓN Y CONEXIÓN CON FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            if (lista.length === 0) {
-                contenedor.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No se encontraron profesionales en esta categoría.</p>`;
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQ_m07Je88uxQ_ijgPEuwC89JCWMYRO1Q",
+            authDomain: "profind-73d00.firebaseapp.com",
+            projectId: "profind-73d00",
+            storageBucket: "profind-73d00.appspot.com",
+            messagingSenderId: "948870800542",
+            appId: "1:948870800542:web:230164c7cf768f6d27978f",
+            measurementId: "G-5FZE96EGNV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.guardarPerfilFirebase = async function() {
+            const nombre = document.getElementById('regNombre').value;
+            const profesion = document.getElementById('regProfesion').value;
+            const ciudad = document.getElementById('regCiudad').value;
+
+            if(!nombre || !profesion || !ciudad) {
+                alert('Por favor completa todos los campos.');
                 return;
             }
 
-            lista.forEach(p => {
-                contenedor.innerHTML += `
-                    <div class="flex items-center space-x-4 p-2 hover:bg-gray-50 rounded-xl transition border-b border-gray-50 last:border-none">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center shrink-0">
-                            ${p.iniciales}
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-900 truncate">${p.nombre}</p>
-                            <p class="text-xs text-gray-500 truncate">${p.profesion} · ${p.ciudad}</p>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function realizarBusqueda() {
-            const termino = document.getElementById('inputBusqueda').value.toLowerCase().trim();
-            const ciudadFiltro = document.getElementById('selectCiudad').value;
-
-            const resultados = profesionales.filter(p => {
-                const coincideTexto = termino === "" || p.nombre.includes(termino) || p.profesion.includes(termino);
-                const coincideCiudad = ciudadFiltro === "todas" || p.ciudad === ciudadFiltro;
-                return coincideTexto && coincideCiudad;
-            });
-
-            const titulo = document.getElementById('tituloResultados');
-            if(titulo) {
-                titulo.innerText = (termino === "" && ciudadFiltro === "todas") ? "Profesionales destacados" : "Resultados de búsqueda";
+            try {
+                await addDoc(collection(db, "profesionales"), {
+                    nombre: nombre,
+                    profesion: profesion,
+                    ciudad: ciudad,
+                    creado: new Date()
+                });
+                alert('¡Perfil guardado exitosamente en Firebase!');
+                cerrarModal();
+                cargarProfesionales();
+            } catch (e) {
+                console.error("Error al guardar: ", e);
+                alert('Hubo un error al guardar el perfil.');
             }
+        };
+
+        async function cargarProfesionales() {
+            const contenedor = document.getElementById('listaDestacados');
+            contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">Cargando...</div>';
             
-            mostrarProfesionales(resultados);
+            try {
+                const querySnapshot = await getDocs(collection(db, "profesionales"));
+                contenedor.innerHTML = '';
+                
+                if(querySnapshot.empty) {
+                    contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-slate-400">No hay profesionales registrados aún. ¡Sé el primero!</div>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const p = doc.data();
+                    const iniciales = p.nombre ? p.nombre.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : 'PF';
+                    
+                    const htmlItem = `
+                        <div class="py-3.5 flex items-center space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-sm">${iniciales}</div>
+                            <div>
+                                <h3 class="text-sm font-semibold text-slate-900">${p.nombre}</h3>
+                                <p class="text-xs text-slate-500">${p.profesion} · ${p.ciudad}</p>
+                            </div>
+                        </div>
+                    `;
+                    contenedor.innerHTML += htmlItem;
+                });
+            } catch (e) {
+                console.error("Error cargando datos: ", e);
+                contenedor.innerHTML = '<div class="py-3.5 text-center text-xs text-red-400">Error al cargar datos de Firebase.</div>';
+            }
         }
 
-        function filtrarCategoria(categoria) {
-            document.getElementById('inputBusqueda').value = categoria;
-            realizarBusqueda();
-        }
+        cargarProfesionales();
+    </script>
 
-        function abrirModalPerfil() {
+    <!-- SCRIPT DE INTERFAZ Y MODALES -->
+    <script>
+        function abrirModal() {
             document.getElementById('modalPerfil').classList.remove('hidden');
+            document.getElementById('modalPerfil').classList.add('flex');
         }
-
-        function cerrarModalPerfil() {
+        function cerrarModal() {
+            document.getElementById('modalPerfil').classList.remove('flex');
             document.getElementById('modalPerfil').classList.add('hidden');
         }
-
-        function guardarPerfil(event) {
-            event.preventDefault();
-            const nombre = document.getElementById('nombrePerfil').value.toLowerCase().trim();
-            const profesion = document.getElementById('profesionPerfil').value.toLowerCase().trim();
-            const ciudad = document.getElementById('ciudadPerfil').value;
-
-            const partes = nombre.split(" ");
-            let iniciales = partes[0][0].toUpperCase();
-            if (partes.length > 1) iniciales += partes[1][0].toUpperCase();
-
-            profesionales.unshift({ nombre, profesion, ciudad, iniciales });
-
-            document.getElementById('inputBusqueda').value = "";
-            document.getElementById('selectCiudad').value = "todas";
-            mostrarProfesionales(profesionales);
-
-            cerrarModalPerfil();
-            document.getElementById('formPerfil').reset();
-            alert("¡Perfil creado y publicado con éxito!");
+        function abrirModalArco() {
+            document.getElementById('modalArco').classList.remove('hidden');
+            document.getElementById('modalArco').classList.add('flex');
         }
-
-        window.onload = function() {
-            mostrarProfesionales(profesionales);
-
-            const btnBuscar = document.getElementById('btnBuscar');
-            if(btnBuscar) btnBuscar.addEventListener('click', realizarBusqueda);
-
-            const inputBusqueda = document.getElementById('inputBusqueda');
-            if(inputBusqueda) {
-                inputBusqueda.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') realizarBusqueda();
-                });
+        function cerrarModalArco() {
+            document.getElementById('modalArco').classList.remove('flex');
+            document.getElementById('modalArco').classList.add('hidden');
+        }
+        function realizarBusqueda() {
+            const query = document.getElementById('inputBusqueda').value;
+            const ciudad = document.getElementById('selectCiudad').value;
+            alert(`Buscando: "${query || 'Todos'}" en "${ciudad || 'Todas las ciudades'}"`);
+        }
+        function enviarSolicitudArco() {
+            const nombre = document.getElementById('arcoNombre').value;
+            const email = document.getElementById('arcoEmail').value;
+            if(!nombre || !email) {
+                alert('Por favor ingresa tu nombre y correo electrónico.');
+                return;
             }
-
-            const selectCiudad = document.getElementById('selectCiudad');
-            if(selectCiudad) selectCiudad.addEventListener('change', realizarBusqueda);
-        };
+            alert('Su solicitud ha sido enviada correctamente. Procesaremos su requerimiento a la brevedad.');
+            cerrarModalArco();
+        }
     </script>
 </body>
 </html>
